@@ -1,8 +1,7 @@
 const { comparePassword, hashPassword } = require('../helper/bcrypt')
-const path = require('path');
 const handleError = require('../helper/error')
 const { getToken } = require('../helper/jwt')
-const Absents = require('../model/absensi')
+const Products = require('../model/product')
 const Users = require('../model/user')
 
 class Admin {
@@ -17,7 +16,7 @@ class Admin {
                 throw handleError('Not Found', 'Invalid email or Password!')
             }
 
-            const payload = { id: user.id, admin: user.admin };
+            const payload = { id: user.id };
             const access_token = getToken(payload)
 
             res.status(200).json({ access_token })
@@ -26,78 +25,44 @@ class Admin {
         }
     }
 
-    static async getUserInfo(req, res, next) {
+    static async getAllProduct(req, res, next) {
         try {
-            if (!req.user.admin) throw handleError('Unauthorized', "You're not unauthorized")
             const query = req.query
             const perPage = 15;
             const skip = ((query?.page || 1) - 1) * perPage;
-
-            function nextMonth(format) {
-                const date = format ? new Date(format + '-01') : new Date();
-                let month = date.getMonth() + 2
-                let year = date.getFullYear()
-                if (month === 13) {
-                    month = '01'
-                    year += 1
-                }
-                return new Date(`${year}-${month}-01`);
-            }
-
-            function currentDate(format) {
-                const date = format ? new Date(format + '-01') : new Date();
-                const month = date.getMonth() === 11 ? '01' : date.getMonth() + 1
-                const year = date.getFullYear()
-                return new Date(`${year}-${month}-01`);
-            }
-
-
-            const startDate = query?.from ? currentDate(query.from) : currentDate();
-            const endDate = query?.from ? nextMonth(query.to) : nextMonth();
-
-            const user = await Users.find({ admin: false }, "-password -__v")
-            const todayAbsent = await Absents.find({
-                tgl_masuk: {
-                    $gte: startDate,
-                    $lt: endDate
-                }
-            }, '-__v', { sort: { tgl_masuk: -1 } }).skip(skip).limit(perPage).populate('user', 'name')
-            const allDataAbsen = await Absents.countDocuments({
-                tgl_masuk: {
-                    $gte: startDate,
-                    $lt: endDate
-                }
-            })
-            const totalPages = Math.ceil(allDataAbsen / perPage);
-            res.status(200).json({ userInfo: user, absen: todayAbsent, totalPages })
+            const product = await Products.find({}, "-__v", { sort: { "date_input": -1 } }).skip(skip).limit(perPage)
+            res.status(201).json({ data: product })
         } catch (error) {
             next(error)
         }
     }
 
-    static async updateUser(req, res, next) {
+    static async editProduct(req, res, next) {
         try {
-            if (!req.user.admin) throw handleError('Unauthorized', "You're not unauthorized")
+            let { product_name, qty, brand, image } = req.body
+            const { id } = req.params
+            if (!product_name) throw handleError('Bad Request', 'product_name is required!')
+            if (!qty) qty = 0
+            if (!brand) throw handleError('Bad Request', 'brand is required!')
+            if (!image) throw handleError('Bad Request', 'image is required!')
+            if (!id) throw handleError('Bad Request', 'id is required!')
 
-            let { email, password, name, phone, position, id } = req.body
-            if (email?.length === 0) throw handleError('Bad Request', 'email is required!')
-            const set = {}
-            if (password?.length > 0) {
-                set.password = hashPassword(password)
-            }
-            if (req.file) set.image = `upload/${req.file.filename}`
+            await Products.updateOne({ _id: id },
+                { $set: { product_name, qty, brand, image } })
+            console.log(id)
+            res.status(201).json({ message: `Success edit product with product name ${product_name}` })
+        } catch (error) {
+            next(error)
+        }
+    }
 
-            set.email = email
-            set.name = name
-            set.phone = phone
-            set.position = position
+    static async deleteProduct(req, res, next) {
+        try {
+            let { id } = req.params
+            if (!id) throw handleError('Bad Request', 'id is required!')
 
-            const result = await Users.findByIdAndUpdate(
-                { _id: id },
-                { $set: set }
-            );
-
-            res.status(201).json({ imagePath: result.image })
+            await Products.deleteOne({ _id: id })
+            res.status(201).json({ message: `Success delete product with product id ${id}` })
         } catch (error) {
             next(error)
         }

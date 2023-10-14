@@ -1,38 +1,27 @@
 const route = require("express").Router();
 const User = require('../controllers/user')
 const auth = require('../middleware/authentication')
-const fs = require('fs');
-const multer = require("multer");
-const mime = require('mime-types');
+const { authorization } = require('../middleware/authorization')
 const Admin = require("../controllers/admin");
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "upload/");
-    },
-    filename: (req, file, cb) => {
-        const extension = mime.extension(file.mimetype);
-        if (!extension) {
-            return callback(new Error('Invalid file type'));
-        }
-        if (fs.existsSync(`upload/${req.id}.${extension}`)) {
-            fs.unlinkSync(`upload/${req.id}.${extension}`);
-        }
-        cb(null, `${req.user.id}.${extension}`);
-    },
-});
-const upload = multer({ storage });
 
 route.post('/user/login', User.login)
-route.post('/admin/login', Admin.login)
 route.post('/user/register', User.register)
 
+route.post('/admin/login', Admin.login)
+
+//? Authentication
 route.use(auth)
 
-route.get("/user", User.getUserInfo)
-route.get("/user/all", Admin.getUserInfo)
-route.patch("/admin", upload.single('image'), Admin.updateUser)
-route.patch("/user", upload.single('image'), User.updateUser)
-route.post("/user/absen/masuk", User.absenMasuk)
-route.post("/user/absen/pulang", User.absenPulang)
+//? Karyawan API
+route.get("/product", User.getProduct)
+route.post("/product", User.addProduct)
+route.patch("/product/:id", User.editProduct)
+route.delete("/product/:id", User.deleteProduct)
+
+//? ADMIN API
+route.get("/product/all", authorization, Admin.getAllProduct)
+route.patch("/product/admin/:id", authorization, Admin.editProduct)
+route.delete("/product/admin/:id", authorization, Admin.deleteProduct)
+
 
 module.exports = route;
