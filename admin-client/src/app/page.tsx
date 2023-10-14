@@ -1,18 +1,7 @@
 "use client"
-import Loading from "@/components/loading";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import Navigation from "@/components/navigation";
 import ReactECharts from 'echarts-for-react';
-import { getUser } from "@/store/actions/fetchUser";
-import { UserState } from "@/store/reducers/user";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
 export default function Home() {
-  // const dispatch = useDispatch();
-  // const user: any = useSelector((state: UserState) => state.UserReducer.user);
-  // const [quotes, setQuotes] = useState(null);
 
   const barChart = {
     title: {
@@ -63,31 +52,18 @@ export default function Home() {
       },
     ],
   };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     dispatch(getUser());
-  //     const res = await axios.get("https://type.fit/api/quotes");
-  //     const random = Math.floor(Math.random() * res.data.length)
-  //     setQuotes(res.data[random].text);
-  //   };
-
-  //   fetchData();
-  // }, [dispatch]);
-
-  // if (!quotes) return <Loading />
   return (
     <div className="page">
       <div className="card-container">
         <div className='card-box hover-card'>
           <span><ShoppingCartOutlinedIcon /></span>
-          <p>ABC's</p>
+          <p>ABC</p>
           <p>2023</p>
           <p><b>3 new</b> Since last visit</p>
         </div>
         <div className='card-box hover-card'>
           <span><ShoppingCartOutlinedIcon /></span>
-          <p>ABC's</p>
+          <p>ABC</p>
           <p>2023</p>
           <p><b>3 new</b> Since last visit</p>
         </div>
