@@ -6,30 +6,25 @@ const schema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    password: {
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    firstname: {
         type: String,
         required: true,
     },
-    phone: {
+    lastname: {
         type: String,
-        required: false,
     },
-    name: {
+    password: {
         type: String,
-        required: false,
-    },
-    position: {
-        type: String,
-        required: false,
-    },
-    image: {
-        type: String,
-        required: false,
     },
     admin: {
         type: Boolean,
         required: true,
-    },
+    }
 });
 
 const Users = mongoose.model('Users', schema);

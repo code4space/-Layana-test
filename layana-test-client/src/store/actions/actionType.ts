@@ -1,0 +1,1 @@
+export const USER = 'success_get/user_info'

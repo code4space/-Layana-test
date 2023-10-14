@@ -16,7 +16,7 @@ async function auth(req, res, next) {
             } else {
                 req.user = {
                     id: user.id,
-                    admin: payload.admin
+                    name: user.username
                 }
                 next()
             }
