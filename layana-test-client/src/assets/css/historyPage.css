@@ -1,6 +1,5 @@
 table {
   width: 100%;
-  font-size: clamp(10px, 2vw, 14px);
 }
 
 table thead {
@@ -14,21 +13,6 @@ table thead th {
 
 table tbody {
   color: rgb(57, 57, 57);
-}
-
-td {
-  vertical-align: center;
-}
-
-.card-box {
-  border: 1px solid rgb(191, 191, 191);
-  box-shadow: 0 3px 5px #0000004d;
-  border-radius: 10px;
-  padding: 10px;
-  width: 100%;
-  background-color: #fff;
-  transition: 0.2s all ease;
-  position: relative;
 }
 
 .history thead tr th:nth-child(1) {
@@ -46,7 +30,6 @@ td {
 .pagination {
   display: flex;
   align-items: center;
-  position: absolute;
   margin-top: 10px;
   background-color: white;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
@@ -86,23 +69,40 @@ td {
   position: relative;
 }
 
-.center .pagination {
-  font-size: clamp(10px, 2vw, 17px);
+
+button.card-box {
+  margin-bottom: 5px;
+  cursor: pointer;
 }
 
-.center .pagination svg {
-  font-size: clamp(10px, 2vw, 17px);
+button.card-box:hover {
+  background-color: rgb(81, 173, 235);
+  color: white;
 }
 
-.card-box.filter {
-  margin-bottom: 10px;
+table td button {
+  color: rgb(63, 63, 63);
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+  border: 1px solid rgb(63, 63, 63);
+  margin-right: 5px;
 }
 
-.card-box.filter label{
-    font-size: clamp(10px, 2vw, 14px);
-    top: 5px;
+table td button:nth-child(2):hover {
+  background-color: rgb(189, 45, 69);
+  border: 1px solid rgb(189, 45, 69);
 }
 
-.card-box.filter input {
-    padding-left: clamp(45px, 10vw, 60px);
+table td button:hover {
+  color: white;
+  background-color: rgb(63, 63, 63);
+}
+
+table td img {
+  height: 50px;
+  width: 70px;
+  border-radius: 10px;
+  object-fit: cover;
 }

@@ -51,7 +51,7 @@ export default function Page() {
                     <form className='input-container' onSubmit={login}>
 
                         <InputEmail setState={setData} state={data} value={'email'} placeHolder={'Email'} />
-                        <PasswordInput setState={setData} state={data} value={'password'} placeHolder={'Password'} strength={true} />
+                        <PasswordInput setState={setData} state={data} value={'password'} placeHolder={'Password'} />
 
                         <button className='basic-button' type='submit'>Sign in</button>
                         <p className='sign-up'>New user ? <b onClick={() => router.push('/signup')}>Sign Up</b></p>

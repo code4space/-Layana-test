@@ -1,81 +1,49 @@
 "use client"
 import { usePathname, useRouter } from 'next/navigation';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import CelebrationIcon from '@mui/icons-material/Celebration';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import SchoolIcon from '@mui/icons-material/School';
-import Person4Icon from '@mui/icons-material/Person4';
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import CircleIcon from '@mui/icons-material/Circle';
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
-import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
-import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
-import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import LocalFireDepartmentSharpIcon from '@mui/icons-material/LocalFireDepartmentSharp';
+import HistorySharpIcon from '@mui/icons-material/HistorySharp';
+import MovingSharpIcon from '@mui/icons-material/MovingSharp';
+import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
+import DesktopMacSharpIcon from '@mui/icons-material/DesktopMacSharp';
+import SettingsIcon from '@mui/icons-material/Settings';
+import PersonIcon from '@mui/icons-material/Person';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-function SubCategory({ Icon, title, option, id, active, setActive }) {
-    const router = useRouter()
-    const pathname = usePathname()
-    function handleClick() {
-        if (id === active) return setActive(null)
-        setActive(id)
-    }
-
-    function navigationTo(path) {
-        router.push(path)
-    }
-
-
-    return (
-        <div className={id === active ? "sub-category-container active" : "sub-category-container"}>
-            <div className="sub-category" onClick={handleClick}>
-                <Icon />
-                {title}
-                <ExpandMoreOutlinedIcon />
-            </div>
-            <ul>
-                {option.map((el, i) => {
-                    return <li className={pathname === option[i].path ? "active" : null} key={i} onClick={() => navigationTo(option[i].path)}>{pathname === option[i].path ? <CircleIcon /> : <CircleOutlinedIcon />}{el.name}</li>
-                })}
-            </ul>
-        </div>
-    )
-}
-
-function SubCategory1({ title, alert = 0, handleClick, Icon, path }) {
-    const pathname = usePathname()
-
-    return (
-        <div className={pathname === path ? "sub-category-container active" : "sub-category-container"}>
-            <div className="sub-category" onClick={handleClick}>
-                <Icon />
-                {title}
-                <span>{alert > 0 ? <p>{alert}</p> : null}</span>
-            </div>
-        </div>
-    )
-}
+import Loading from './loading';
 
 export default function Navigation({ children }) {
-    const [active, setActive] = useState(null)
-    const [isMinimize, setMinimize] = useState(false)
-    const [isHovered, setIsHovered] = useState(false)
-    const [countNew, setCountNew] = useState(0)
+    const [active, setActive] = useState(0)
+    const [loading, setLoading] = useState(true)
+    const [showDetail, setShowDetail] = useState(true)
+    const [activeMobNav, setAvtiveMobNav] = useState(false)
+    const [activeMobTopNav, setAvtiveMobTopNav] = useState(false)
+
     const [isMobile, setIsMobile] = useState(false);
+
+    const pathname = usePathname()
+
+    function handleDetail() {
+        setShowDetail(!showDetail)
+        setAvtiveMobNav(!activeMobNav)
+    }
+
 
     useEffect(() => {
         const handleResize = () => {
-            const isMobileDevice = window.innerWidth <= 800; // Set the breakpoint for mobile devices
+            const isMobileDevice = window.innerWidth <= 768; // Set the breakpoint for mobile devices
             setIsMobile(isMobileDevice);
         };
+
+        if (pathname === '/product') setActive(1)
+        else setActive(0)
 
         handleResize();
 
         window.addEventListener('resize', handleResize);
+        setLoading(false)
 
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -85,7 +53,8 @@ export default function Navigation({ children }) {
 
     const router = useRouter()
 
-    function handleNavigate(route) {
+    function handleNavigate(route, number) {
+        setActive(number)
         router.push(route)
     }
 
@@ -95,70 +64,46 @@ export default function Navigation({ children }) {
     }
 
     // const dispatch = useDispatch();
-    // const notification = useSelector((state) => state.StudentReducer.notification);
-
-    function sideNavClass() {
-        let className = ['side-navigation']
-        if (isMobile) className.push('mobile')
-        if (isMinimize) className.push('minimize')
-        return className.join(' ')
-    }
+    if (loading) return <Loading />
     return (
-        <div className="navigation-container">
-
-            <div className={sideNavClass()}>
-                <h2>Karyawan {(isMobile && !isMinimize) ? <ChevronLeftOutlinedIcon onClick={() => setMinimize(!isMinimize)} /> : null}</h2>
-                <div className="category">
-                    <h4>Menu</h4>
-                    < SubCategory Icon={NoteAltOutlinedIcon}
-                        title={'Absen'}
-                        option={[
-                            { name: 'Masuk', path: '/absen' },
-                            { name: 'History Kehadiran', path: '/absen/history' },
-                        ]}
-                        id={2}
-                        active={active}
-                        setActive={setActive}
-                    />
-                    < SubCategory1
-                        Icon={Person4Icon}
-                        title={'Profile'}
-                        path={'/profile'}
-                        handleClick={() => { handleNavigate('/profile') }} />
-                    < SubCategory1
-                        Icon={LogoutOutlinedIcon}
-                        title={'Logout'}
-                        handleClick={logout} />
-                </div>
-                <div className="category">
-                    <h4>Profile</h4>
-                    <div className="profile">
-                        <AccountCircleIcon />
-                        <div>
-                        </div>
-                        <MoreHorizOutlinedIcon />
-                    </div>
-                </div>
+        <div style={{display: 'flex'}}>
+            <div className="navbar">
+                {isMobile ?
+                    <> {activeMobNav && <div className='blur' onClick={handleDetail}></div>}
+                        <div className='sideNav-mobile' style={activeMobNav ? { maxWidth: '230px' } : { maxWidth: '0px', padding: '0' }}>
+                            <div className='logo' onClick={() => { window.location.reload() }}> <LocalFireDepartmentSharpIcon /> <p>Layana</p></div>
+                            <div className='active-container' style={{ top: `${active * 60 + 80}px` }}><div className='active-mob'></div></div>
+                            <ul>
+                                <li className={pathname === '/' ? 'activeNav' : null} onClick={() => { handleNavigate('/', 0) }}><HomeRoundedIcon /> <p>&nbsp; Dashboard</p> </li>
+                                <li className={pathname === '/product' ? 'activeNav' : null} onClick={() => { handleNavigate('/product', 1) }}><DesktopMacSharpIcon />&nbsp; <p>Product</p></li>
+                            </ul>
+                        </div></> :
+                    <div className='sideNav' style={showDetail ? { width: '230px' } : { width: '70px' }}>
+                        <div className='logo' onClick={() => { window.location.reload() }}> <LocalFireDepartmentSharpIcon /> {showDetail && <p>Layana</p>}</div>
+                        <div className='active-container' style={{ top: `${active * 60 + 80}px` }}><div className='active'></div></div>
+                        <ul>
+                            <li className={pathname === '/' ? 'activeNav' : null} onClick={() => { handleNavigate('/', 0) }}><HomeRoundedIcon /> {showDetail && <p>Dashboard</p>} </li>
+                            <li className={pathname === '/product' ? 'activeNav' : null} onClick={() => { handleNavigate('/product', 1) }}><DesktopMacSharpIcon /> {showDetail && <p>Product</p>}</li>
+                        </ul>
+                    </div>}
             </div>
-            {(isMobile && !isMinimize) ? <div className="bg-blur" onClick={() => setMinimize(true)}></div> : null}
-
-            <div className={isMinimize || isMobile ? "container minimize" : "container"}>
-                <div className={isMinimize || isMobile ? "top-navigation minimize" : "top-navigation"}>
-                    <span
-                        onMouseEnter={() => setIsHovered(true)}
-                        onMouseLeave={() => setIsHovered(false)}
-                        onClick={() => setMinimize(!isMinimize)}>{isMinimize && !isHovered ? <MenuOutlinedIcon /> : <ChevronLeftOutlinedIcon />}</span>
-                    <div className="introduction">
-                        <h2>Welcome<CelebrationIcon /></h2>
-                        <p>Aplikasi absensi karyawan</p>
+            <div className='content' style={isMobile ? null : showDetail ? { width: 'calc(100% - 230px)' } : { width: 'calc(100% - 70px)' }}>
+                <div className='topNav'>
+                    <button onClick={handleDetail} className='menu'><MenuOutlinedIcon /></button>
+                    <div className='topNav-right'>
+                        {isMobile ?
+                            <button className='menu' onClick={() => { setAvtiveMobTopNav(!activeMobTopNav) }}><MoreVertIcon /></button> :
+                            <> <button className='menu'><PersonIcon /></button>
+                                <button className='menu'> <SettingsIcon /></button>
+                                <button className='menu' onClick={logout}><LogoutSharpIcon /></button></>}
                     </div>
-                    <div className="right-nav">
-                        <NotificationsNoneIcon />
-                    </div>
+                    {(isMobile && activeMobTopNav) && <div className='popOut-setting'>
+                        <button className='menu'><PersonIcon /> &nbsp;Account</button>
+                        <button className='menu'> <SettingsIcon /> &nbsp;Setting</button>
+                        <button className='menu' onClick={logout}><LogoutSharpIcon /> &nbsp;Logout</button>
+                    </div>}
                 </div>
-                <div className="page">
-                    {children}
-                </div>
+                {children}
             </div>
         </div>
     )

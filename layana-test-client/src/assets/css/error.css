@@ -1,11 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 :root {
   --err-color: #00ffc0;
   --err-duration: 2s;
@@ -16,6 +10,11 @@
   display: flex;
   width: 100vw;
   height: 100dvh;
+  position: fixed;
+  background-color: white;
+  left: 0;
+  top: 0;
+  z-index: 100;
 }
 
 .drop {

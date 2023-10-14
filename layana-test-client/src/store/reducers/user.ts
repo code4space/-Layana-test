@@ -20,7 +20,7 @@ function UserReducer(state = initialState, action: any) {
         case USER:
             return {
                 ...state,
-                user: action.payload.userInfo,
+                user: action.payload.data,
                 absen: action.payload.absen,
                 totalPage: action.payload.totalPages,
             }

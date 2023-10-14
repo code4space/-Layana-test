@@ -13,9 +13,9 @@ export function userFetchSuccess(payload: object) {
 export function getUser(page: number = 1, from?: string, to?: string): any {
   return async (dispatch: Function) => {
     try {
-      let url = `${baseUrl}/user/?page=${page}`
-      if (from) url += `&from=${from}`
-      if (to) url += `&to=${to}`
+      let url = `${baseUrl}/product/?page=${page}`
+      // if (from) url += `&from=${from}`
+      // if (to) url += `&to=${to}`
 
 
       const response = await axios({
@@ -23,6 +23,8 @@ export function getUser(page: number = 1, from?: string, to?: string): any {
         method: 'GET',
         headers: { access_token: getCookie("access_token") }
       })
+
+      console.log(response.data)
       dispatch(userFetchSuccess(response.data));
     } catch (error) {
       console.log(error);

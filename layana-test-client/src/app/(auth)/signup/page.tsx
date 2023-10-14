@@ -1,5 +1,5 @@
 "use client"
-import { ChangeEvent, FormEvent, useState } from 'react';
+import {  FormEvent, useState } from 'react';
 import { Input, InputEmail, PasswordInput } from '@/components/input';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
@@ -9,20 +9,21 @@ import { baseUrl } from '@/constant/url'
 export default function RegisterPage() {
     const router = useRouter()
     const [data, setData] = useState({
-        name: '',
+        username: '',
+        firstname: '',
+        lastname: '',
         email: '',
         password: '',
-        phone: '',
-        position: '',
     })
 
     async function handleButton(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        const { name, email, password, phone, position } = data
+        console.log('masuk')
+        const { username, firstname, lastname, email, password } = data
         await axios({
             url: baseUrl + `/user/register`,
             method: "POST",
-            data: { name, email, password, phone, position }
+            data: { username, firstname, lastname, email, password }
         }).then(() => {
             router.push('/login')
             Swal.fire({
@@ -47,14 +48,12 @@ export default function RegisterPage() {
                 <div className='login-box register'>
                     <h3>KARYAWAN SIGN UP</h3>
                     <form className='input-container' onSubmit={handleButton}>
+                        <Input setState={setData} state={data} value={'username'} placeHolder={'Username'} />
                         <div className="dual-input">
-                            <Input setState={setData} state={data} value={'name'} placeHolder={'Full Name'} />
-                            <InputEmail setState={setData} state={data} value={'email'} placeHolder={'Email'} />
+                            <Input setState={setData} state={data} value={'firstname'} placeHolder={'First Name'} />
+                            <Input setState={setData} state={data} value={'lastname'} placeHolder={'Last Name'} />
                         </div>
-                        <div className="dual-input">
-                            <Input setState={setData} state={data} value={'position'} placeHolder={'Position'} />
-                            <Input setState={setData} state={data} value={'phone'} placeHolder={'Phone'} />
-                        </div>
+                        <InputEmail setState={setData} state={data} value={'email'} placeHolder={'Email'} />
                         <PasswordInput strength={true} setState={setData} state={data} value={'password'} placeHolder={'Password'} />
 
                         <button className='basic-button' type='submit'>Sign Up</button>

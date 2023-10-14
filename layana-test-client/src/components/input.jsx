@@ -21,7 +21,7 @@ function passwordStrengthParameter(password) {
     }
 }
 
-export function PasswordInput({ state, setState, value, placeHolder, strength, required=true }) {
+export function PasswordInput({ state, setState, value, placeHolder, strength=false, required=true }) {
     const [isHide, setIsHide] = useState(true)
     const [password, setPassword] = useState({ desc: '', color: '' })
     function handleIsHide() {

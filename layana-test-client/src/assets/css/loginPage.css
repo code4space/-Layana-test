@@ -1,6 +1,6 @@
 .login-container {
   width: 100vw;
-  height: 100dvh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,28 +12,17 @@
   padding: 3px;
   border-radius: 10px;
   width: 80%;
+  height: 80%;
   max-width: 800px;
   overflow: hidden;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
   background: linear-gradient(
     180deg,
-    var(--primary-black) 0%,
-    var(--primary-black) 25%,
-    var(--primary-black) 50%,
+    rgba(144, 41, 255, 1) 0%,
+    rgba(125, 55, 255, 1) 25%,
+    rgba(144, 41, 255, 1) 50%,
     rgba(144, 41, 255, 0) 100%
   );
-}
-
-.border-container .register select {
-  border-radius: 5px;
-  height: 40px;
-  width: calc(50% - 5px);
-  padding: 10px;
-  background: transparent;
-  border: 1px solid rgb(175, 175, 175);
-  transition: 0.5s all ease;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  color: rgb(90, 90, 90);
 }
 
 .login-box {
@@ -46,25 +35,16 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  min-height: 400px;
-}
-
-.login-box h2 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-right: 30px;
 }
 
 .login-box h3 {
-  color: var(--primary-black);
-  margin-bottom: 30px;
-  text-align: center;
+  color: #9029ff;
+  margin-bottom: 40px;
 }
 
 .input-container {
   width: 100%;
-  padding: 8px 5px;
+  padding: 10px 5px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -89,16 +69,6 @@
   color: rgb(90, 90, 90);
 }
 
-.inputBox textarea {
-  padding: 10px;
-  border: 1px solid rgb(175, 175, 175);
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  color: rgb(90, 90, 90);
-  background: transparent;
-  border-radius: 5px;
-  font: 100% var(--default-font);
-}
-
 .inputBox label {
   position: absolute;
   left: 0;
@@ -119,32 +89,18 @@
 }
 
 .inputBox svg:hover {
-  color: var(primary-black);
+  color: #9029ff;
 }
 
 .inputBox input:valid,
 .inputBox input:focus,
 .inputBox textarea:focus,
 .inputBox textarea:valid {
-  border: 1px solid var(primary-black);
+  border: 1px solid #9029ff;
   outline: none;
 }
 
-.active-input input {
-  border: 1px solid var(--primary-black);
-  outline: none;
-}
-
-.active-input label {
-  top: -10px;
-  padding: 0 7px;
-  font-size: 13px;
-  left: 10px;
-  background-color: white;
-  border-radius: 10px;
-  color: var(--primary-black);
-}
-
+.active-input label,
 .inputBox input:valid ~ label,
 .inputBox input:focus ~ label,
 .inputBox textarea:focus ~ label,
@@ -155,7 +111,7 @@
   left: 10px;
   background-color: white;
   border-radius: 10px;
-  color: var(--primary-black);
+  color: #9029ff;
 }
 
 .dual-input {
@@ -177,17 +133,13 @@
   .dual-input div {
     width: 100%;
   }
-
-  .register select {
-    width: 100%;
-  }
 }
 
 .basic-button {
   background-color: transparent;
   padding: 13px;
-  color: var(--primary-black);
-  border: 1px solid var(--primary-black);
+  color: #9029ff;
+  border: 1px solid #9029ff;
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
@@ -197,7 +149,7 @@
 
 .basic-button:hover {
   color: white;
-  background-color: var(--primary-black);
+  background-color: #9029ff;
   transform: translateY(-3px);
 }
 
@@ -209,7 +161,7 @@
 }
 
 .sign-up b {
-  color: var(--primary-black);
+  color: #9029ff;
   cursor: pointer;
 }
 
