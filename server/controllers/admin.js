@@ -31,7 +31,9 @@ class Admin {
             const perPage = 15;
             const skip = ((query?.page || 1) - 1) * perPage;
             const product = await Products.find({}, "-__v", { sort: { "date_input": -1 } }).skip(skip).limit(perPage)
-            res.status(201).json({ data: product })
+            const countProduct = await Products.countDocuments({})
+            const totalPages = Math.ceil(countProduct / perPage);
+            res.status(201).json({ data: product, totalPages })
         } catch (error) {
             next(error)
         }

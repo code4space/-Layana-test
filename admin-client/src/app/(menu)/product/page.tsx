@@ -54,18 +54,11 @@ export default function Page() {
         const { product_name, qty, brand, date_input, image, _id } = product.find(({ _id }: any) => _id === id)
         setProductInfo({ product_name, qty, brand, date_input, image, id: _id })
     }
-
-    function handleAdd() {
-        setOpenModal(true)
-        setAction("add")
-        setProductInfo({ product_name: "", qty: 0, brand: "", image: "" })
-    }
-
     useEffect(() => {
         dispatch(getUser())
     }, [dispatch])
 
-    const totalPage: any = 10
+    const totalPage: any = useSelector((state: UserState) => state.UserReducer.totalPage);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -74,7 +67,7 @@ export default function Page() {
 
         try {
             const method = action === "edit" ? "PATCH" : "POST"
-            const url = action === "edit" ? `${baseUrl}/product/${id}` : `${baseUrl}/product`
+            const url = action === "edit" ? `${baseUrl}/product/admin/${id}` : `${baseUrl}/product`
             console.log(url)
             await axios({
                 method,
@@ -102,7 +95,7 @@ export default function Page() {
             if (result.isConfirmed) {
                 await axios({
                     method: "DELETE",
-                    url: baseUrl + `/product/${id}`,
+                    url: baseUrl + `/product/admin/${id}`,
                     headers: { access_token: getCookie('access_token') }
                 }).then(() => {
                     swalTopEnd("Delete Success")
@@ -117,7 +110,6 @@ export default function Page() {
 
     return (
         <div className="page">
-            <button className='card-box' onClick={() => handleAdd()}>+ Add Product</button>
             <div className='card-box'>
                 <p className='title'><CategoryIcon /><b>Product</b></p>
                 <table className='history'>
@@ -126,6 +118,7 @@ export default function Page() {
                             <th>Name</th>
                             <th>Brand</th>
                             <th>Qty</th>
+                            <th>Uploaded by</th>
                             <th>Date Input</th>
                             <th>Image</th>
                             <th>Action</th>
@@ -133,12 +126,13 @@ export default function Page() {
                     </thead>
                     <tbody>
                         {
-                            product.map(({ product_name, qty, brand, date_input, image, _id }: any, i: number) => {
+                            product.map(({ product_name, qty, brand, date_input, image, _id, uploaded_by }: any, i: number) => {
                                 return (
                                     <tr key={i}>
                                         <td>{product_name}</td>
                                         <td>{brand}</td>
                                         <td>{qty}</td>
+                                        <td>{uploaded_by}</td>
                                         <td>{currentMonthYear(date_input)}</td>
                                         <td><img src={image} alt="" /></td>
                                         <td><button onClick={() => handleClick(_id)}>Edit</button><button onClick={() => handleDelete(product_name, _id)} className='delete'>Delete</button></td>

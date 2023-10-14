@@ -55,7 +55,9 @@ class User {
             const product = await Products.find({
                 uploaded_by: req.user.name
             }, "-__v", { sort: { "date_input": -1 } }).skip(skip).limit(perPage)
-            res.status(201).json({ data: product })
+            const countProduct = await Products.countDocuments({uploaded_by: req.user.name})
+            const totalPages = Math.ceil(countProduct / perPage);
+            res.status(201).json({ data: product, totalPages })
         } catch (error) {
             next(error)
         }

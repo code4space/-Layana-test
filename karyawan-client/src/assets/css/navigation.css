@@ -1,0 +1,195 @@
+.navbar {
+    display: flex;
+}
+
+.sideNav-mobile {
+    transition: 0.5s all ease;
+    height: 100vh;
+    background-color: #9029ff;
+    padding-top: 10px;
+    padding-left: 10px;
+    position: absolute;
+    z-index: 4;
+    overflow: hidden;
+    width: 230px
+}
+
+.sideNav {
+    transition: 0.5s all ease;
+    height: 100vh;
+    background-color: #9029ff;
+    padding-top: 10px;
+    padding-left: 10px;
+    position: relative;
+}
+
+.active-container {
+    position: absolute;
+    left: 1px;
+    width: 100%;
+    padding-left: 10px;
+    transition: 0.5s all ease;
+    top: 70px;
+}
+
+.active-mob {
+    background-color: #eff3f8;
+    border-radius: 25px;
+    width: 90%;
+    height: 50px;
+    position: relative;
+    z-index: 2; 
+}
+
+.active {
+    background-color: #eff3f8;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    width: 100%;
+    height: 50px;
+    position: relative;
+    z-index: 2;
+}
+
+.blur {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.405);
+    z-index: 4;
+    backdrop-filter: blur(5px);
+}
+
+.active::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: none;
+    position: absolute;
+    top: -20px;
+    right: 0;
+    border-radius: 50%;
+    box-shadow: 10px 10px 0 #eff3f8;;
+}
+
+.active::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: none;
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    border-radius: 50%;
+    box-shadow: 10px -10px 0 #eff3f8;
+}
+
+.activeNav p {
+    color: #9029ff;
+    font-weight: 600;
+}
+
+.activeNav svg {
+    color: #9029ff;
+} 
+
+.logo {
+    color: #eff3f8;
+    font-size: 20px;
+    margin-bottom: 40px;
+    margin-left: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 30px;
+}
+
+.sideNav ul li, .sideNav-mobile ul li {
+    width: 100%;
+    list-style: none;
+    color: #eff3f8;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding-left: 10px;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 10px;
+    z-index: 3;
+    transition: 0.5s all ease;
+}
+
+
+.sideNav ul li svg, .sideNav ul li svg {
+    font-size: 25px;
+    margin-right: 10px;
+}
+
+.content {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transition: 0.5s all ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.topNav {
+    background-color: white;
+    box-shadow: 3px 0 5px rgba(0, 0, 0, 0.315);
+    padding: 10px 20px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.menu {
+    cursor: pointer;
+    color: rgb(124, 124, 124);
+    background: none;
+    border: 2px solid white;
+    padding: 4px;
+    border-radius: 15px;
+    transition: 0.3s all ease;
+    display: flex;
+    align-items: center;
+}
+
+.menu:hover {
+    color: rgb(74, 74, 74);
+    background-color: rgb(237, 237, 237);
+}
+
+.menu:active {
+    border: 2px solid rgb(246, 204, 249);
+}
+
+.topNav-right {
+ display: flex;
+ gap: 10px;
+}
+
+.topNav-right svg {
+    cursor: pointer;
+}
+
+.popOut-setting {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+}
+
+.popOut-setting button:active {
+    border: 2px solid white;
+}
