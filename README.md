@@ -5,6 +5,23 @@
 Aplikasi admin dengan role Super Admin dan Employee.
 Employee dapat menambah, mengedit, dan delete product miliknya sedangkan admin dapat mengupdate/delete milik siapapun
 
+## Deployed link
+
+#### Employee : https://layana-test.vercel.app/
+
+> email: user@mail.com <br/>
+> password: 12345678
+> &nbsp;
+
+#### Admin : https://layana-test-scv8.vercel.app/login
+
+> email: admin@mail.com <br/>
+> password: 12345678
+
+```js
+Wajib merestore database / seeding terlebih dahulu bila mau dicoba di local
+```
+
 ## Client Side Dibuat dengan
 
 [![React][React.js]][React-url][![Nextjs][Nextjs]][Nextjs-url] <br>
@@ -73,17 +90,6 @@ $ cd Layana-test/server
 $ node seeders/seed.js
 
 // == Setelah berhasil table guru, murid dan grade berhasil terbuat
-```
-
-&nbsp;
-
-## Akun admin
-
-> email: admin@mail.com <br/>
-> password: 12345678
-
-```js
-Wajib merestore database / seeding terlebih dahulu
 ```
 
 &nbsp;
