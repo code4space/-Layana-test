@@ -48,7 +48,7 @@ export default function Navigation({ children }) {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, []);
+    }, [pathname]);
 
 
     const router = useRouter()

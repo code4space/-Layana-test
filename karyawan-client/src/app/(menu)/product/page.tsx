@@ -17,6 +17,7 @@ import { useEffect, useState, FormEvent } from "react";
 
 import { Input, InputEmail } from '@/components/input';
 import Swal from 'sweetalert2';
+import Image from 'next/image';
 
 export default function Page() {
     const currentMonthYear = (date: string = '') => {
@@ -140,7 +141,7 @@ export default function Page() {
                                         <td>{brand}</td>
                                         <td>{qty}</td>
                                         <td>{currentMonthYear(date_input)}</td>
-                                        <td><img src={image} alt="" /></td>
+                                        <td><Image src={image} alt="" /></td>
                                         <td><button onClick={() => handleClick(_id)}>Edit</button><button onClick={() => handleDelete(product_name, _id)} className='delete'>Delete</button></td>
                                     </tr>
                                 )
